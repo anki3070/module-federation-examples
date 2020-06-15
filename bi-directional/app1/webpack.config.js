@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
 const deps = require("./package.json").dependencies;
 module.exports = {
@@ -25,31 +24,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new ModuleFederationPlugin({
-      name: "app1",
-      library: { type: "var", name: "app1" },
-      filename: "remoteEntry.js",
-      remotes: {
-        app2: "app2",
-      },
-      exposes: {
-        "./Button": "./src/Button",
-      },
-      // sharing code based on the installed version, to allow for multiple vendors with different versions
-      shared: {
-        ...deps,
-        react: {
-          eager: true,
-          singleton: true,
-          requiredVersion: deps.react,
-        },
-        "react-dom": {
-          eager: true,
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-        },
-      },
-    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
