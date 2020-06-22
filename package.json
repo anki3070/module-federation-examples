@@ -15,6 +15,7 @@
       "server-side-rendering/*",
       "dynamic-system-host/*",
       "shared-context/*",
+      "url-remote/*",
       "shared-routing/*",
       "shared-routes2/*",
       "typescript/*",
