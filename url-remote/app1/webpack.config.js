@@ -12,6 +12,12 @@ module.exports = {
   output: {
     publicPath: "http://localhost:3001/",
   },
+  externals: {
+    app2: {
+      import: "http://localhost:3002",
+      type: "async",
+    },
+  },
   module: {
     rules: [
       {
@@ -30,7 +36,7 @@ module.exports = {
       library: { type: "var", name: "app1" },
       filename: "remoteEntry.js",
       remotes: {
-        app2: "app2",
+        app2: { external: "app2@./remoteEntry.js" },
       },
       exposes: {
         "./Button": "./src/Button",
@@ -39,12 +45,10 @@ module.exports = {
       shared: {
         ...deps,
         react: {
-          eager: true,
           singleton: true,
           requiredVersion: deps.react,
         },
         "react-dom": {
-          eager: true,
           singleton: true,
           requiredVersion: deps["react-dom"],
         },
